@@ -1,7 +1,7 @@
 # Open-E JovianDSS Kubernetes CSI plugin
 
-[![Build Status](https://travis-ci.org/open-e/JovianDSS-KubernetesCSI.svg?branch=master)](https://travis-ci.org/open-e/JovianDSS-KubernetesCSI)
-[![Go Report Card](https://goreportcard.com/badge/github.com/open-e/JovianDSS-KubernetesCSI)](https://goreportcard.com/report/github.com/open-e/JovianDSS-KubernetesCSI)
+[![Build Status](https://travis-ci.org/bserdar/JovianDSS-KubernetesCSI.svg?branch=master)](https://travis-ci.org/bserdar/JovianDSS-KubernetesCSI)
+[![Go Report Card](https://goreportcard.com/badge/github.com/bserdar/JovianDSS-KubernetesCSI)](https://goreportcard.com/report/github.com/bserdar/JovianDSS-KubernetesCSI)
 
 ## Background
 
@@ -15,9 +15,14 @@ article](https://www.docker.com/blog/road-to-containing-iscsi/). This
 form implemented the 3rd option:
 
 > Install open-iscsi on the host, run iscsid on the host. Run the container bind mounted with host root filesystem (docker run -v /:/host <container> <entrypoint>). 
-> Create a chroot environment for iscsiadm with root set to host root filesystem and PATH set to appropriate host bin directories. Add this to a script named “iscsiadm”
-> Add this file to the container image and grant the right permissions.
-> This ensures that every invocation of iscsiadm by the container calls the above chroot script. NetApp Trident uses this solution to containerize their Docker Volume Plugin.
+
+> Create a chroot environment for iscsiadm with root set to host root
+> filesystem and PATH set to appropriate host bin directories. Add
+> this to a script named “iscsiadm”. Add this file to the container
+> image and grant the right permissions. This ensures that every
+> invocation of iscsiadm by the container calls the above chroot
+> script. NetApp Trident uses this solution to containerize their
+> Docker Volume Plugin.
 
 The containers are built to expect host root to be mounted under /host
 directory. For Kubernetes deployment, make sure to mount host root to
