@@ -5,7 +5,7 @@
 
 ## Background
 
-This for of the plugin corrects the containerization of the original
+This fork of the plugin corrects the containerization of the original
 JovianDSS CSI plugin and includes some code cleanup. The plugin uses
 iscsiadm to stage a volume before mounting it. The original plugin
 installed iscsiadm into the container and called that. This resulted
