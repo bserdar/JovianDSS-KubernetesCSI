@@ -13,6 +13,8 @@ type IdentityPlugin struct {
 	cfg *Config
 }
 
+// GetPluginInfo returns the drivername and version set in the
+// configuration
 func (ip *IdentityPlugin) GetPluginInfo(ctx context.Context, req *csi.GetPluginInfoRequest) (*csi.GetPluginInfoResponse, error) {
 	ip.l.Trace("Serving GetPluginInfo")
 
@@ -30,15 +32,20 @@ func (ip *IdentityPlugin) GetPluginInfo(ctx context.Context, req *csi.GetPluginI
 	}, nil
 }
 
+// GetIdentityPlugin configures and returns the identity plugin using
+// the given configuration. Only the conf.DriverName and conf.Version
+// are used
 func GetIdentityPlugin(conf *Config, log *logrus.Entry) (ip *IdentityPlugin, err error) {
 	ip = &IdentityPlugin{cfg: conf, l: log}
 	return ip, nil
 }
 
+// Probe returns an empty response
 func (ip *IdentityPlugin) Probe(ctx context.Context, req *csi.ProbeRequest) (*csi.ProbeResponse, error) {
 	return &csi.ProbeResponse{}, nil
 }
 
+// GetPluginCapabilities returns CONTROLLER_SERVICE
 func (ip *IdentityPlugin) GetPluginCapabilities(ctx context.Context, req *csi.GetPluginCapabilitiesRequest) (*csi.GetPluginCapabilitiesResponse, error) {
 	ip.l.Infof("Using default capabilities")
 	return &csi.GetPluginCapabilitiesResponse{

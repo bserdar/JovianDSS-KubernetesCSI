@@ -79,6 +79,10 @@ type origin struct {
 	Snapshot string
 }
 
+// Parses origin of the format
+//
+//    pool/volume@snapshot
+//
 func parseOrigin(or string) (*origin, error) {
 	var out origin
 	poolAndName := strings.Split(or, "/")
@@ -90,7 +94,7 @@ func parseOrigin(or string) (*origin, error) {
 
 	out.Pool = poolAndName[0]
 	nameAndSnap := strings.Split(poolAndName[1], "@")
-	if len(poolAndName) != 2 {
+	if len(nameAndSnap) != 2 {
 		msg := fmt.Sprintf("Incorrecct origin %s", or)
 		return nil, status.Errorf(codes.Internal, msg)
 	}
@@ -219,7 +223,7 @@ func (cp *ControllerPlugin) getStandardId(salt string, name string) string {
 	preID := []byte(salt + name)
 	rawID := sha256.Sum256(preID)
 	id := strings.ToLower(fmt.Sprintf("%X", rawID))
-	l.Trace("For %s id is %s", name, id)
+	l.Tracef("For %s id is %s", name, id)
 	return id
 }
 
@@ -436,6 +440,7 @@ func (cp *ControllerPlugin) CreateVolume(ctx context.Context, req *csi.CreateVol
 	//////////////////////////////////////////////////////////////////////////////
 	// Check if volume exists
 
+	// This returns a volume ID based on salt and vname (which is a hash of salt+vname)
 	volumeID := cp.getStandardId(cp.cfg.Salt, vName)
 
 	v, err := cp.getVolume(volumeID)

@@ -57,6 +57,8 @@ type RestProxyInterface interface {
 	Send(method, path string, data interface{}, ok int) (int, []byte, error)
 }
 
+// Send submits a request to the destination service, marshaling data if nonnil
+// TODO: ok is not used, remove it
 func (rp *RestProxy) Send(method, path string, data interface{}, ok int) (int, []byte, error) {
 	var res *http.Response
 	var err error
