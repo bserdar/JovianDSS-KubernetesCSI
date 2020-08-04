@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Run iscsiadm in chroot. This must run the iscsiadm mounted from the host
+chroot /host /usr/bin/env -i PATH="/sbin:/bin:/usr/bin" iscsiadm $*

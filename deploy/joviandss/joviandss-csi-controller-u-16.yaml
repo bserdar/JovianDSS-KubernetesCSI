@@ -121,7 +121,7 @@ spec:
               mountPath: /var/lib/csi/sockets/pluginproxy
 
         - name: csi-controller
-          image: opene/joviandss-csi-u-16:latest
+          image: bserdar/joviandss-csi-u-16:latest
           args:
             - --csi-address=/csi/csi.sock
             - --soc-type=unix

@@ -74,7 +74,7 @@ spec:
             capabilities:
               add: ['SYS_ADMIN']
             allowPrivilegeEscalation: true
-          image: opene/joviandss-csi-u-16:latest
+          image: bserdar/joviandss-csi-u-16:latest
           imagePullPolicy: IfNotPresent
           args:
             - --csi-address=/csi/csi.sock
@@ -96,12 +96,18 @@ spec:
             - name: mount-dir
               mountPath: /var/lib/kubelet/pods
               mountPropagation: Bidirectional
+            - name: hostroot
+              mountPath: /host
 
       volumes:
         - name: socket-dir
           hostPath:
             path: /var/lib/kubelet/plugins_registry/com.open-e.joviandss.csi
             type: DirectoryOrCreate
+        - name: hostroot
+          hostPath:
+            path: /
+            type: Directory
         - name: dev-dir
           hostPath:
             path: /dev
